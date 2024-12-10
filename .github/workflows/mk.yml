@@ -1,0 +1,20 @@
+name: integration-test-1
+
+on:
+    pull_request:
+        branches:
+            - master
+
+jobs:
+    run-inference:
+        runs-on: ubuntu-latest
+
+        steps:
+
+            - name: setup SSH
+              uses: webfactory/ssh-agent@v0.9.0
+              with:
+                ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+            - name: run inference
+              run: ssh root@${{ secrets.TEST_VM }} "python3 /my.py"
