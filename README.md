@@ -6,7 +6,7 @@
 </p>
 
 <h3 align="center">
-Easy, fast, and cheap LLM serving for everyone
+Easy, fast, and cheap LLM serving for everyone but me
 </h3>
 
 <p align="center">
