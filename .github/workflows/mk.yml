@@ -1,6 +1,7 @@
 name: integration-test-1
 run-name: ${{ github.actor }} is learning GitHub Actions
-on: [workflow_dispatch]
+on:
+    workflow_dispatch:
 jobs:
     run-inference:
         runs-on: ubuntu-latest
