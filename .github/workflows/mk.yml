@@ -18,4 +18,4 @@ jobs:
                 ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
             - name: run inference
-              run: ssh root@${{ secrets.TEST_VM }} "python3 /my.py"
+              run: ssh root@${{ env.TEST_VM }} "python3 /my.py"
