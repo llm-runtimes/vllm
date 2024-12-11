@@ -19,9 +19,12 @@ jobs:
 
             - run: touch ./tst
             - run: ls
-            
+
             - name: setup
               run: echo -n ${{ secrets.SSH_PRIVATE_KEY }} > ./mrt
+
+            - run: ls -l
+            - run: wc ./mrt
 
             - name: run inference
               run: ssh -i ./mrt root@52.118.207.5 "python3 /my.py"
