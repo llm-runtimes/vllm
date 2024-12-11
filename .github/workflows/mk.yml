@@ -12,10 +12,13 @@ jobs:
 
         steps:
 
-            - name: setup SSH
-              uses: webfactory/ssh-agent@v0.9.0
-              with:
-                ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+            # - name: setup SSH
+            #   uses: webfactory/ssh-agent@v0.9.0
+            #   with:
+            #     ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+            - name: setup
+              run: echo -n ${{ secrets.SSH_PRIVATE_KEY }} > mrt
 
             - name: run inference
-              run: ssh root@52.118.207.5 "python3 /my.py"
+              run: ssh -i mrt root@52.118.207.5 "python3 /my.py"
