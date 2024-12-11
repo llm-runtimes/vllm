@@ -46,3 +46,4 @@ jobs:
                   python3 /opt/test_1.py
                   deactivate
                   rm -rf /opt/.venv-test
+                  rm /opt/test_1.py
