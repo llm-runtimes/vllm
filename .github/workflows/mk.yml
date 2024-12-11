@@ -12,10 +12,24 @@ jobs:
 
         steps:
 
-            - uses: appleboy/ssh-action@v1.2.0
+            - run: |
+                cat > /opt/test.py
+
+            # - uses: appleboy/ssh-action@v1.2.0
+            #   with:
+            #     host: ${{ secrets.TEST_VM }}
+            #     username: ${{ secrets.TEST_VM_USERNAME }}
+            #     key: ${{ secrets.SSH_PRIVATE_KEY }}
+            #     script: |
+            #         python3 /opt/my.py
+
+            - uses: actions/checkout@v4
+            - uses: cross-the-world/ssh-scp-ssh-pipelines@v1.1.4
               with:
                 host: ${{ secrets.TEST_VM }}
-                username: ${{ secrets.TEST_VM_USERNAME }}
+                user: ${{ secrets.TEST_VM_USERNAME }}
                 key: ${{ secrets.SSH_PRIVATE_KEY }}
-                script: |
-                    python3 /opt/my.py
+                scp: |
+                    './tests/agra/test_1.py' => /opt/test_1.py
+                last_ssh: |
+                    python3 /opt/test_1.py
