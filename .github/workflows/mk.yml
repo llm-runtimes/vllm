@@ -32,13 +32,3 @@ jobs:
                 key: ${{ secrets.SSH_PRIVATE_KEY }}
                 script: |
                     python3 /opt/my.py
-
-            # - uses: cross-the-world/ssh-scp-ssh-pipelines@v1.1.4
-            #   with:
-            #     host: ${{ secrets.TEST_VM }}
-            #     user: ${{ secrets.TEST_VM_USERNAME }}
-            #     key: ${{ secrets.SSH_PRIVATE_KEY }}
-            #     scp: |
-            #         './tests/agra/test_1.py' => /opt/test_1.py
-            #     last_ssh: |
-            #         python3 /opt/test_1.py
