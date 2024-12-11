@@ -12,10 +12,45 @@ jobs:
 
         steps:
 
-            - name: setup SSH
-              uses: webfactory/ssh-agent@v0.9.0
-              with:
-                ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+            - uses: actions/checkout@v4
 
-            - name: run inference
-              run: ssh root@${{ secrets.TEST_VM }} "python3 /my.py"
+            - name: install vllm
+              uses: appleboy/ssh-action@v1.2.0
+              with  :
+                host: ${{ secrets.TEST_VM }}
+                username: ${{ secrets.TEST_VM_USERNAME }}
+                key: ${{ secrets.SSH_PRIVATE_KEY }}
+                script: |
+                  python3 -m venv /opt/.venv-test
+                  source /opt/.venv-test/bin/activate
+                  pip3 install https://vllm-wheels.s3.us-west-2.amazonaws.com/nightly/vllm-1.0.0.dev-cp38-abi3-manylinux1_x86_64.whl
+  
+            - name: upload test cases
+              uses: betanzos/scp-upload@v1.1.0
+              with:
+                host: ${{ secrets.TEST_VM }}
+                username: ${{ secrets.TEST_VM_USERNAME }}
+                key: ${{ secrets.SSH_PRIVATE_KEY }}
+                source: './tests/agra/test_1.py'
+                remote_dir: '/opt'
+                recursive: 'false'
+
+            - name: run test_1.py
+              uses: appleboy/ssh-action@v1.2.0
+              with:
+                host: ${{ secrets.TEST_VM }}
+                username: ${{ secrets.TEST_VM_USERNAME }}
+                key: ${{ secrets.SSH_PRIVATE_KEY }}
+                script: |
+                  source /opt/.venv-test/bin/activate
+                  python3 /opt/test_1.py
+
+            - name: cleanup
+              uses: appleboy/ssh-action@v1.2.0
+              with:
+                host: ${{ secrets.TEST_VM }}
+                username: ${{ secrets.TEST_VM_USERNAME }}
+                key: ${{ secrets.SSH_PRIVATE_KEY }}
+                script: |
+                  rm -rf /opt/.venv-test
+                  rm /opt/test_1.py
