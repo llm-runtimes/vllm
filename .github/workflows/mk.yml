@@ -24,16 +24,16 @@ jobs:
                 remote_dir: '/opt'
                 recursive: 'false'
 
-            # - name: run test case
-            #   uses: appleboy/ssh-action@v1.2.0
-            #   with  :
-            #     host: ${{ secrets.TEST_VM }}
-            #     username: ${{ secrets.TEST_VM_USERNAME }}
-            #     key: ${{ secrets.SSH_PRIVATE_KEY }}
-            #     script: |
-            #       python3 -m venv /opt/.venv-test
-            #       source /opt/.venv-test/bin/activate
-            #       pip install https://vllm-wheels.s3.us-west-2.amazonaws.com/nightly/vllm-1.0.0.dev-cp38-abi3-manylinux1_x86_64.whl
+            - name: run test case
+              uses: appleboy/ssh-action@v1.2.0
+              with  :
+                host: ${{ secrets.TEST_VM }}
+                username: ${{ secrets.TEST_VM_USERNAME }}
+                key: ${{ secrets.SSH_PRIVATE_KEY }}
+                script: |
+                  python3 -m venv /opt/.venv-test
+                  source /opt/.venv-test/bin/activate
+                  pip install https://vllm-wheels.s3.us-west-2.amazonaws.com/nightly/vllm-1.0.0.dev-cp38-abi3-manylinux1_x86_64.whl
   
             - name: run test case
               uses: appleboy/ssh-action@v1.2.0
