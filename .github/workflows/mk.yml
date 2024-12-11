@@ -18,4 +18,4 @@ jobs:
                 username: ${{ secrets.TEST_VM_USERNAME }}
                 key: ${{ secrets.SSH_PRIVATE_KEY }}
                 script: |
-                    python3 /my.py
+                    python3 /opt/my.py
