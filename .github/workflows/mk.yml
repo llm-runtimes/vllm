@@ -12,19 +12,10 @@ jobs:
 
         steps:
 
-            # - name: setup SSH
-            #   uses: webfactory/ssh-agent@v0.9.0
-            #   with:
-            #     ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
-            - run: touch ./tst
-            - run: ls
-
-            - name: setup
-              run: echo -n ${{ secrets.SSH_PRIVATE_KEY }} > ./mrt
-
-            - run: ls -l
-            - run: wc ./mrt
-
-            - name: run inference
-              run: ssh -i ./mrt root@52.118.207.5 "python3 /my.py"
+            - uses: appleboy/ssh-action
+              with:
+                host: ${{ secrets.TEST_VM }}
+                username: ${{ secrets.TEST_VM_USERNAME }}
+                key: ${{ secrets.SSH_PRIVATE_KEY }}
+                script: |
+                    python3 /my.py
