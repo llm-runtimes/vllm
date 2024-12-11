@@ -12,7 +12,7 @@ jobs:
 
         steps:
 
-            - uses: appleboy/ssh-action
+            - uses: appleboy/ssh-action@v1.2.0
               with:
                 host: ${{ secrets.TEST_VM }}
                 username: ${{ secrets.TEST_VM_USERNAME }}
